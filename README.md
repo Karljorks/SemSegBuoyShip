@@ -1,6 +1,6 @@
 # Maritime Semantic Segmentation
 
-Dense semantic segmentation for maritime scenes — classifying pixels into water, sky, ship, buoy, land, and other categories. The project covers the full pipeline: dataset, training, and visual predictions.
+Semantic segmentation for maritime scenes. The project covers the full pipeline: dataset, training, and visual predictions.
 
 ---
 
@@ -9,12 +9,12 @@ Dense semantic segmentation for maritime scenes — classifying pixels into wate
 ```
 ├── train.py                  # Training script
 ├── predict.py                # Prediction / visualisation script
-├── prompt.txt                # The prompt used to generate the base code
+├── prompt.txt                # The prompt used to generate the base train.py code
 ├── models/
-│   ├── best_model_fpn.pth         # Best FPN + ResNeSt50 checkpoint
-│   └── best_model_unetpp.pth      # Best UNet++ + MobileNetV3 checkpoint
+│   ├── bestlargemodel.pth         # Best FPN + ResNeSt50 checkpoint
+│   └── bestsmallmodel.pth      # Best UNet++ + MobileNetV3 checkpoint
 ├── finalModelPredictions/    # Output images produced by the two final models
-├── dataset.zip               # Full dataset (train / validate / test splits)
+├── dataset.zip               # Full dataset (train/validate/test splits)
 └── README.md
 ```
 
@@ -98,24 +98,13 @@ output/
 └── test_results.json    # Final test set evaluation + efficiency stats
 ```
 
-**Resuming a run:**
+**Used encoder options:**
 
-```bash
-python train.py \
-  --data_root ~/maritime/dataset \
-  --output_dir ~/maritime/output/unetpp_resnet34 \
-  --encoder resnet34 \
-  --resume ~/maritime/output/unetpp_resnet34/last_model.pth
-```
-
-**Common encoder options:**
-
-| Encoder | Speed | Accuracy |
-|--------|-------|----------|
-| `resnet34` | Fast | Good baseline |
-| `timm-resnest50d` | Medium | Strong |
-| `timm-efficientnet-b2` | Medium | Efficient |
-| `timm-mobilenetv3_large_100` | Very fast | Lightweight |
+| `resnet34` | 
+| `timm-resnest50d` | 
+| `timm-efficientnet-b0` |
+| `timm-efficientnet-b2` |
+| `timm-mobilenetv3_large_100` | 
 
 ---
 
@@ -127,17 +116,6 @@ Once you have a trained checkpoint, run `predict.py` on a folder of images:
 python predict.py \
   --checkpoint ~/maritime/output/unetpp_resnet34/best_model.pth \
   --input_dir  ~/maritime/dataset/test/images \
-  --output_dir ~/maritime/predictions \
-  --encoder    resnet34
-```
-
-To also compute per-image mIoU, provide the ground-truth masks:
-
-```bash
-python predict.py \
-  --checkpoint ~/maritime/output/unetpp_resnet34/best_model.pth \
-  --input_dir  ~/maritime/dataset/test/images \
-  --mask_dir   ~/maritime/dataset/test/masks \
   --output_dir ~/maritime/predictions \
   --encoder    resnet34
 ```
