@@ -1,0 +1,15 @@
+I am planning to train models with different architectures. I have semantically segmented sataset of 1693 pictures in maritime environment, the resolution of the picture is 512x384 pixels. It contains the following classes with the following distribution (name-pixel count-percentage of whole): 
+
+0 - Obstacles/Env - 1 459 111 - 0.44%
+1 - Water - 139 322 138 - 41.86%
+2 - Sky - 154 307 671 - 46.36%
+3 - Ship - 4 802 620 - 1.44%
+4 - Unknown - 5 422 140 - 1.62%
+6 - Land - 26 075 524 - 7.83%
+7 - Buoy - 1 468 140 - 0.44%
+
+Ignore classes 0 and 4 in performance tracking. Class 5 is meant to be unused. 
+
+The data has already been split into train/validate/test folders. Each folder has a subfolder for images and masks. This can not be changed. I want to train the model with U-Net++. I want to choose the encoder manually from the command line with learning rate, epoch count and batch size. I need to run it in my school server with CUDA and conda. I need to track mIoU and IoUs of classes separately. I also need to track performance metrics like peak VRAM, FPS, model size and count of parameters. The batch size for inference tracking must be 1. I also need to save the best model of each run.
+
+Please write me a Python script using Pytorch. The optimizer must be AdamW. After the training has been finished save and display the results.
